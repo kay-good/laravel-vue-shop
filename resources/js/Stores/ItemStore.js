@@ -3,9 +3,6 @@ import axios from 'axios'
 
 export const useItemStore = defineStore('ItemStore', {
     state: () => ({ items: [] }),
-    getters: {
-        doubleCount: (state) => state.count * 2,
-    },
     actions: {
         async fill() {
             const data = (await axios.get("/items")).data
@@ -14,18 +11,12 @@ export const useItemStore = defineStore('ItemStore', {
             })
         },
         plusCount(id) {
-            for (let i = 0; i < this.items.length; i++) {
-                if (this.items[i].id === id) {
-                    this.items[i].count += 1
-                }
-            }
+            const index = this.items.findIndex(it => it.id === id)
+            this.items[index].count += 1
         },
         minusCount(id) {
-            for (let i = 0; i < this.items.length; i++) {
-                if (this.items[i].id === id) {
-                    this.items[i].count !== 1 ? this.items[i].count -= 1 : 1
-                }
-            }
+            const index = this.items.findIndex(it => it.id === id)
+            this.items[index].count !== 1 ? this.items[index].count -= 1 : 1
         },
     },
 })
