@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,9 @@ use App\Http\Controllers\ItemController;
 */
 
 Route::get('/items', [ItemController::class, 'send']);
+
+Route::resource('/orders', OrderController::class)
+    ->only(['store']);
 
 Route::get('/{any}', function () {
     return view('app');
